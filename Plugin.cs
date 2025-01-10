@@ -1,14 +1,15 @@
-using HarmonyLib;
-using Unity.Mathematics;
-using UnityEngine;
-using Zorro.Settings;
-#if BEPINEX
 using BepInEx;
-#endif
+using HarmonyLib;
+
 namespace DontSaveToDesktop;
 
-[ContentWarningPlugin("DontSaveToDesktop", "1.0.1", true)]
-public class Plugin
+[ContentWarningPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, true)]
+[BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
+public class Plugin : BaseUnityPlugin
 {
-
+    private static readonly Harmony Patcher = new(MyPluginInfo.PLUGIN_GUID);
+    private void Awake()
+    {
+        Patcher.PatchAll();
+    }
 }

@@ -1,5 +1,4 @@
-﻿using Unity.Mathematics;
-using Zorro.Settings;
+﻿using Zorro.Settings;
 
 namespace DontSaveToDesktop;
 
@@ -8,7 +7,6 @@ public class FileName : StringSetting, IExposedSetting
 {
     public override void ApplyValue() { }
 
-    // Prefer using the Mods category
     public SettingCategory GetSettingCategory() => SettingCategory.Mods;
 
     public string GetDisplayName() => "[DontSaveToDesktop] Video Filename";
@@ -21,7 +19,6 @@ public class FilePath : StringSetting, IExposedSetting
 {
     public override void ApplyValue() { }
 
-    // Prefer using the Mods category
     public SettingCategory GetSettingCategory() => SettingCategory.Mods;
 
     public string GetDisplayName() => "[DontSaveToDesktop] Video Path";
