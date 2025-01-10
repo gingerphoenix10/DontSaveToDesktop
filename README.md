@@ -17,5 +17,5 @@ To make sure every video has a different name, you can use these strings in your
 - %ss - The current second. For example, if the date is January 12 2025 9:31:52 PM, then %ss would be 52.
 
 ## Default values:
-File Name: "content_warning_%HANDLE"
+File Name: "content_warning_%HANDLE"<br>
 File Path: "%USER\Desktop"
