@@ -14,8 +14,11 @@
         <CWDir Condition=" '$(CWDir)' == '' ">C:\Program Files (x86)\Steam\steamapps\common\Content Warning</CWDir>
     </PropertyGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition="$(CI) != 'true'">
         <Reference Include="$(CWDir)\Content Warning_Data\Managed\*.dll" Private="false" />
+    </ItemGroup>
+    <ItemGroup Condition="$(CI) == 'true'">
+        <PackageReference Include="MaxWasUnavailable.ContentWarning.Libs" Version="*-*" PrivateAssets="all" />
     </ItemGroup>
 
     <Target Name="CopyOutputFileToGame" AfterTargets="Build">
