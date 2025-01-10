@@ -1,8 +1,6 @@
 ﻿using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
-using Zorro.Core;
-using Zorro.UI.Modal;
 
 namespace DontSaveToDesktop.Patches;
 
