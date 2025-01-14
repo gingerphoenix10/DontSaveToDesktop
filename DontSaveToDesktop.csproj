@@ -14,14 +14,14 @@
         <CWDir Condition=" '$(CWDir)' == '' ">C:\Program Files (x86)\Steam\steamapps\common\Content Warning</CWDir>
     </PropertyGroup>
 
-    <ItemGroup Condition="$(CI) != 'true'">
+    <ItemGroup Condition="exists(@($(CWDIR)))">
         <Reference Include="$(CWDir)\Content Warning_Data\Managed\*.dll" Private="false" />
     </ItemGroup>
-    <ItemGroup Condition="$(CI) == 'true'">
+    <ItemGroup Condition="!exists(@($(CWDIR)))">
         <PackageReference Include="MaxWasUnavailable.ContentWarning.Libs" Version="*-*" PrivateAssets="all" />
     </ItemGroup>
 
-    <Target Name="CopyOutputFileToGame" AfterTargets="Build">
+    <Target Name="CopyOutputFileToGame" AfterTargets="Build" Condition="exists(@($(CWDIR)))">
         <Copy SourceFiles="$(OutputPath)\$(AssemblyName).dll;preview.png" DestinationFolder="$(CWDir)\Plugins\$(MSBuildProjectName)"/>
     </Target>
 
