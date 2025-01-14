@@ -20,7 +20,7 @@ internal static class Replacements
             .Replace("%QDAY", SurfaceNetworkHandler.RoomStats.CurrentQuotaDay.ToString())
             .Replace("%RUN", SurfaceNetworkHandler.RoomStats.CurrentRun.ToString())
             .Replace("%localPLAYER", SteamFriends.GetPersonaName())
-            .Replace("%localID", SteamUser.GetSteamID());
+            .Replace("%localID", SteamUser.GetSteamID().ToString());
             //TODO: Add ContentPOVs info (owner's user ID) to CameraRecording for use in replacements if possible.
   }
 }
