@@ -28,7 +28,7 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(CI) != 'true'">
+  <ItemGroup Condition="exists(@($(CWDir)))">
     <Reference Include="Assembly-CSharp">
       <HintPath>$(CWDir)\Content Warning_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -46,11 +46,11 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup Condition="$(CI) == 'true'">
+  <ItemGroup Condition="!exists(@($(CWDir)))">
     <PackageReference Include="MaxWasUnavailable.ContentWarning.Libs.BepInEx" Version="*-*" PrivateAssets="all" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(CI) != 'true'">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="exists(@($(CWDir)))">
     <Copy SourceFiles="$(OutputPath)\$(AssemblyName).dll" DestinationFolder="$(CWDir)\BepInEx\Plugins" />
   </Target>
 </Project>

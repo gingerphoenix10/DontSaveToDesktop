@@ -1,5 +1,5 @@
-﻿using System;
 using System.IO;
+using System;
 using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
@@ -15,6 +15,7 @@ internal static class SaveVideoToDesktopInteractablePatch
     {
         CameraRecording m_recording = (CameraRecording)typeof(SaveVideoToDesktopInteractable)
             .GetField("m_recording", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(__instance);
+        Replacements.m_recording = m_recording;
         Debug.Log((object) "Saving video to folder...");
         string localizedString1 = LocalizationKeys.GetLocalizedString(LocalizationKeys.Keys.VideoSaved);
         string localizedString2 = LocalizationKeys.GetLocalizedString(LocalizationKeys.Keys.VideoSavedAs);
@@ -33,35 +34,11 @@ internal static class SaveVideoToDesktopInteractablePatch
             return false;
         }
 
-        string fileName = GameHandler.Instance.SettingsHandler.GetSetting<FileName>().Value
-            .Replace("%HANDLE", m_recording.videoHandle.ToString())
-            .Replace("%USER", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile))
-            .Replace("%YY", DateTime.Now.Year.ToString("yy"))
-            .Replace("%CCYY", DateTime.Now.Year.ToString())
-            .Replace("%MM", DateTime.Now.Month.ToString("00"))
-            .Replace("%DD", DateTime.Now.Day.ToString("00"))
-            .Replace("%hh", DateTime.Now.Hour.ToString("00"))
-            .Replace("%mm", DateTime.Now.Minute.ToString("00"))
-            .Replace("%ss", DateTime.Now.Second.ToString("00"))
-            .Replace("%DAY", SurfaceNetworkHandler.RoomStats.CurrentDay.ToString())
-            .Replace("%QDAY", SurfaceNetworkHandler.RoomStats.CurrentQuotaDay.ToString())
-            .Replace("%RUN", SurfaceNetworkHandler.RoomStats.CurrentRun.ToString());
+        string fileName = Replacements.apply(GameHandler.Instance.SettingsHandler.GetSetting<FileName>().Value);
         
         videoFileName = fileName + ".webm";
 
-        string filePath = GameHandler.Instance.SettingsHandler.GetSetting<FilePath>().Value
-            .Replace("%HANDLE", m_recording.videoHandle.ToString())
-            .Replace("%USER", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile))
-            .Replace("%YY", DateTime.Now.Year.ToString("yy"))
-            .Replace("%CCYY", DateTime.Now.Year.ToString())
-            .Replace("%MM", DateTime.Now.Month.ToString("00"))
-            .Replace("%DD", DateTime.Now.Day.ToString("00"))
-            .Replace("%hh", DateTime.Now.Hour.ToString("00"))
-            .Replace("%mm", DateTime.Now.Minute.ToString("00"))
-            .Replace("%ss", DateTime.Now.Second.ToString("00"))
-            .Replace("%DAY", SurfaceNetworkHandler.RoomStats.CurrentDay.ToString())
-            .Replace("%QDAY", SurfaceNetworkHandler.RoomStats.CurrentQuotaDay.ToString())
-            .Replace("%RUN", SurfaceNetworkHandler.RoomStats.CurrentRun.ToString());
+        string filePath = Replacements.apply(GameHandler.Instance.SettingsHandler.GetSetting<FilePath>().Value);
         
         if (!File.Exists(path))
         {
